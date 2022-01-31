@@ -1,0 +1,115 @@
+﻿@using Domain
+@model User
+@{
+    Layout = "_Layout1";
+}
+<div class="container">
+    <div class="col-md-12 col-sm-12">
+        <form method="post" action="/Customer/Signup/Save">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title"> <h2 class="text-center">Welcome to Customer SignUp Panel</h2></div>
+                </div>
+                @if (ViewData["Message"] != null)
+                {
+                    <div class="error-alert" style="color: #2e963f; background-color: #99bcda !important;">
+                        <strong>Success!</strong>
+                        <p>@Html.Raw(ViewData["Message"].ToString())</p>
+                    </div>
+                }
+                <div class="panel-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="customertype">Customer Type <span class="text-danger">*</span></label>
+                            <select class="form-control" asp-for="CustomerType" asp-items="Html.GetEnumSelectList<CustomerTypeOption>()">
+                                <option selected="selected" value="">Please select</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="cname">Name</label>
+                            <input type="text" asp-for="Name" class="form-control" id="cname" placeholder="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lname">Address<span class="text-danger">*</span></label>
+                            <input type="text" asp-for="Address" class="form-control" id="address" placeholder="Address">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="address">Phone</label>
+                            <input type="text" asp-for="Phone" class="form-control" id="phone" placeholder="Phone">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Email<span class="text-danger">*</span></label>
+                            <input type="email" asp-for="Email" class="form-control" id="email" placeholder="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="contactnumber">Fax</label>
+                            <input type="text" asp-for="Fax" class="form-control" id="fax" placeholder="Fax">
+                            <span asp-validation-for="Fax" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row" id="corporateCustomerId">
+                        <div class="form-group col-md-4">
+                            <label for="shippingmethod">Shipping Method<span class="text-danger">*</span></label>
+                            <select class="form-control" asp-for="ShippingMethod" asp-items="Html.GetEnumSelectList<ShippingOption>()">
+                                <option selected="selected" value="">Please select</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="buyername">BuyerName</label>
+                            <input type="text" asp-for="BuyerName" class="form-control" id="buyername" placeholder="BuyerName">
+                            <span asp-validation-for="BuyerName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="buyerphone">BuyerPhone<span class="text-danger">*</span></label>
+                            <input type="text" asp-for="BuyerPhone" class="form-control" id="buyerphone" placeholder="BuyerPhone">
+                            <span asp-validation-for="BuyerPhone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row" id="homeOfficeCustomersId">
+                        <div class="form-group col-md-4">
+                            <label for="DoingBusinessAs">DoingBusinessAs(Company Name)</label>
+                            <input type="text" asp-for="DoingBusinessAs" class="form-control" id="doingbusinessas" placeholder="DoingBusinessAs">
+                            <span asp-validation-for="DoingBusinessAs" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="username">UserName<span class="text-danger">*</span></label>
+                            <input type="text" asp-for="Username" class="form-control" id="username" placeholder="UserName">
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="password">Password<span class="text-danger">*</span></label>
+                            <input type="password" asp-for="Password" class="form-control" id="password" placeholder="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="confirmpassword">Confirm Password<span class="text-danger">*</span></label>
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" id="confirmpassword" placeholder="Confirm Password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <div class="form-row text-center">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        or
+                        <a class="btn btn-primary" href="/">Signin</a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts {
+<script src="~/js/Module/UserRegistration.js"></script>
+}
+

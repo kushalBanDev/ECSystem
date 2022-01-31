@@ -1,0 +1,89 @@
+﻿@model Domain.Product
+@{
+    IEnumerable<Domain.Product> productList = ViewBag.DDLProduct as IEnumerable<Domain.Product>;
+}
+<h1>Welcome to customer page.</h1>
+<form method="post" action="/Customer/Home/Index">
+    <section class='catalog-filters'>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <p style="text-align:left">Shop by Category:</p>
+                </div>
+                <div class="col-sm-4">
+                    <select asp-for="Category">
+                        <option value="">Choose...</option>
+                        @if (productList != null)
+                        {
+                            @foreach (var item in productList)
+                            {
+                                <option value="@item.Category">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="row col-sm-2">
+                    <button type="submit" id="searchProduct" class="btn btn-info">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*<div class="card-columns">
+        @foreach (var product in productList)
+        {
+        <div class="card row">
+        <img class="card-img" src="@product.Image">
+        <div class="card-body">
+        <h5 class="card-title">@product.Name</h5>
+        <span id=produc>@(String.Format("{0} {1}", "Rs.", @product.Price))</span>
+        </div>
+        <div class="card-footer">
+        <button type="button" id="addToBasket" class="btn btn-info">Add To Basket</button>
+        <button type="button" class="btn btn-primary">More Info</button>
+        </div>
+        </div>
+        }
+        </div>*@
+    <div class="card-columns">
+        @for (int i = 0; i < productList.Count(); i++)
+        {
+            var item = productList.ToList()[i];
+            <div class="card row">
+                <img class="card-img" src="@item.Image">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <span id=productPrice>@(String.Format("{0} {1}", "Rs.",@item.Price))</span>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="addToBasket" class="btn btn-info" value="@item.Id" onclick="AddToCartBtn(@item.Id)">More Info</button>
+                </div>
+                <input type="hidden" asp-for="@item.Id">
+            </div>
+        }
+    </div>
+</form>
+@section scripts {
+@*<script src="~/js/Module/Product.js"></script>*@
+<script>
+    //var AddToCartBtn;
+    //AddToCartBtn = function AddToCartBtn(this){
+    //    console.log(this);
+    //    alert("ok");
+    //}
+    function AddToCartBtn(productId){
+             $.ajax({
+        type: 'POST',
+        async: true,
+        url: '/Customer/Home/GetBasketItems',
+        dataType: 'json',
+        data: { productId: productId },
+        success: function (data) {
+            window.location.href = "/Customer/Basket/Index?productId=" + productId;
+        },
+        error: function (ex) {
+            alert('Failed to load.' + ex);
+        }
+    });
+    }
+</script>
+}

@@ -1,0 +1,78 @@
+﻿@using Domain
+@model Basket
+@Html.HiddenFor(model => model.ProductUnitPrice)
+
+    <form method="post" action="/Customer/Basket/AddToBasket">
+@Html.HiddenFor(model => model.ProductId)
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
+            <div class="lable">
+                <label>Product Image</label>
+            </div>
+            <div class="lable">
+                <img src="@Model.ProductUri" width=100px; height=100px;>
+            </div>
+        </div>
+        <div class="col">
+            <div class="lable">
+                <label>Product Name</label>
+            </div>
+            <div class="lable">
+                @Html.Raw(@Model.ProductName)
+            </div>
+        </div>
+        <div class="col">
+            <div class="lable">
+                <label>Product Price</label>
+            </div>
+            <div class="lable">
+                @Html.Raw(@Model.ProductUnitPrice)
+            </div>
+        </div>
+        <div class="col">
+            <div class="lable">
+                <label>Quantity</label>
+            </div>
+            <div class="lable">
+                <input type="number" id="Quantity" min="0" value="@Model.Quantity" onchange="myFunction()"/>
+            </div>
+        </div>
+        <div class="col">
+            <div class="lable">
+                <label>Cost</label>
+            </div>
+            <div class="lable">
+                @Html.Raw(@Model.ProductUnitPrice * @Model.Quantity)
+@*                <p>Full Name: <span class="input-details">@Model.FirstName&nbsp;@Model.MiddleName&nbsp;@Model.LastName </span> </p>
+*@            </div>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="col-sm-5">
+            <button type="button" class="btn btn-success">Continue Shopping</button>
+        </div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary">Add To Basket</button>
+        </div>
+         <div class="col-sm-2" id="totalDiv" style="margin: 0 auto;">
+            <div class="lable">
+                <label>Total</label>
+            </div>
+            <div class="lable"  id="Total">@Html.Raw(@Model.ProductUnitPrice * @Model.Quantity)</div>
+        </div>
+    </div>
+</div>
+</form>
+@section scripts {
+<script>
+    function myFunction(){
+    var quantity = $("#Quantity").val();
+    var productUnitPrice = $("#ProductUnitPrice").val();
+   var totalChangeValue = (parseFloat(quantity).toFixed(2) * parseFloat(productUnitPrice).toFixed(2));
+   document.getElementById("Total").innerHTML = parseFloat(totalChangeValue).toFixed(2);
+}
+</script>
+
+
+}
